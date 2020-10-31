@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe</title>
+    <style type="text/css">
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: lightblue;
+            display: inline-block;
+            border: solid 1px white;
+            vertical-align: middle;
+            /*设置垂直对齐方式*/
+
+            line-height: 100px;
+            font-size: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="board"></div>
+    <script>
+        let pattern = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+        ]
+        let xLen = pattern.length;
+        let yLen = pattern[0].length;
+        let color = 1;//落子颜色 0没有 1 O（黑） 2 X（白） 
+        console.log('111', pattern)
+        show();
+        function show() {
+            let board = document.getElementById('board');
+            //清空棋盘
+            board.innerText = "";
+            for (let i = 0; i < xLen; i++) {
+                for (let j = 0; j < yLen; j++) {
+                    let cell = document.createElement("div");
+                    cell.classList.add('cell');
+                    cell.innerText = pattern[i][j] == 2 ? '❌' :
+                        pattern[i][j] == 1 ? '🔴' : '';
+                    cell.addEventListener('click', () => move(i, j))
+                    board.appendChild(cell)
+                }
+                board.appendChild(document.createElement('br'))
+            }
+        }
+        function move(x, y) {
+            debugger
+            //修改棋盘落子
+            pattern[x][y] = color;
+            //修改落子颜色
+            if (checkSts(pattern, color)) {
+                alert(color == 2 ? '❌ is winner' : '🔴 is winner');
+            }
+            show();
+            color = 3 - color;
+            if (willWin(pattern, color)) {
+                console.log(color == 2 ? '❌ will win!' : '⭕️ will win!')
+            }
+        }
+        function clone(pattern) {
+            return JSON.parse(JSON.stringify(pattern))
+        }
+        //判断是否将赢
+        function willWin(pattern, color) {
+            for (let i = 0; i < xLen; i++) {
+                for (let j = 0; j < yLen; j++) {
+                    if (pattern[i][j])
+                    continue
+                    let tmp = clone(pattern)
+                    tmp[i][j] = color
+                    if (checkSts(tmp, color)) {
+                        return true
+                    }
+            }
+            }
+            return false
+        }
+        //检查输赢
+        function checkSts(pattern,color) {
+            debugger
+            //检查x
+            for (let i = 0; i < xLen; i++) {
+                let win = true;
+                for (let j = 0; j < yLen; j++) {
+                    if (pattern[i][j] !== color) {
+                        win = false;
+                        break;
+                    }
+                }
+                if (win) {
+                    return true;
+                }
+            }
+            //检查y
+            for (let i = 0; i < xLen; i++) {
+                let win = true;
+                for (let j = 0; j < yLen; j++) {
+                    if (pattern[j][i] !== color) {
+                        win = false;
+                        break;
+                    }
+                }
+                if (win) {
+                    return true;
+                }
+            }
+            {
+                let win = true;
+                //检查斜向
+                for (let j = 0; j < yLen; j++) {
+                    if (pattern[j][j] !== color) {
+                        win = false;
+                        break;
+                    }
+                }
+                if (win) {
+                    return true;
+                }
+            }
+            {
+                let win = true;
+                //检查斜向
+                for (let j = 0; j < yLen; j++) {
+                    if (pattern[j][2 - j] !== color) {
+                        win = false;
+                        break;
+                    }
+                }
+                if (win) {
+                    return true;
+                }
+            }
+        }
+        
+    </script>
+</body>
+
+</html>
