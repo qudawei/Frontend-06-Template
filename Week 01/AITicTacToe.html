@@ -56,15 +56,17 @@
             }
         }
         function move(x, y) {
-            //修改棋盘落子
-            pattern[x][y] = color;
-            //修改落子颜色
-            if (checkSts(pattern, color)) {
-                alert(color == 2 ? '❌ is winner' : '🔴 is winner');
+            if(!pattern[x][y]){
+                //修改棋盘落子
+                pattern[x][y] = color;
+                //修改落子颜色
+                if (checkSts(pattern, color)) {
+                    alert(color == 2 ? '❌ is winner' : '🔴 is winner');
+                }
+                color = 3 - color;
+                show();
+                console.log(222, bestChioce(pattern, color))
             }
-            color = 3 - color;
-            show();
-            console.log(222, bestChioce(pattern, color))
 
         }
         function clone(pattern) {

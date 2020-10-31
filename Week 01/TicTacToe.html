@@ -53,16 +53,18 @@
         }
         function move(x, y) {
             debugger
-            //修改棋盘落子
-            pattern[x][y] = color;
-            //修改落子颜色
-            if (checkSts(pattern, color)) {
-                alert(color == 2 ? '❌ is winner' : '🔴 is winner');
-            }
-            show();
-            color = 3 - color;
-            if (willWin(pattern, color)) {
-                console.log(color == 2 ? '❌ will win!' : '⭕️ will win!')
+            if(!pattern[x][y]){
+                //修改棋盘落子
+                pattern[x][y] = color;
+                //修改落子颜色
+                if (checkSts(pattern, color)) {
+                    alert(color == 2 ? '❌ is winner' : '🔴 is winner');
+                }
+                show();
+                color = 3 - color;
+                if (willWin(pattern, color)) {
+                    console.log(color == 2 ? '❌ will win!' : '⭕️ will win!')
+                }
             }
         }
         function clone(pattern) {
