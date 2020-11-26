@@ -1,0 +1,52 @@
+<style>
+    .cell {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: lightblue;
+      border-bottom: solid 1px white;
+      border-right: solid 1px white;
+      vertical-align: middle;
+    }
+    #container {
+      width: 701px;
+    }
+  </style>
+  <div id="container"></div>
+  <button onclick="localStorage['map'] = JSON.stringify(map)">save</button>
+  <button onclick="localStorage['map'] = ''">clear</button>
+  <script>
+    class Sorted{
+      constructor(data, compare){
+        //保存一份data
+        this.data = data.slice()
+        // 若compare没有 选用a-b的逻辑
+        this.compare = compare || ((a, b) => a-b)
+      }
+      take(){
+        //返回undefined
+        if(!this.data.length){
+          return;
+        }
+        //默认从0开始取最小的数和位置
+        let min = this.data[0];
+        let minIndex = 0;
+        for(let i = 1;i < this.data.length;i++){
+          if(this.compare(this.data[i], min) < 0){
+            min = this.data[i];
+            minIndex = i;
+          }
+        }
+        //取到之后删除最小值 splice(O(n)的操作)
+        //这里采用的 将最小值和最后位置的值交换位置 在删除
+        this.data[minIndex] = this.data[this.data.length - 1]
+        this.data.pop();
+        return min;
+      }
+      give(v){
+        this.data.push(v)
+      }
+    }
+  
+    // findPath(map, [0, 0], [50, 50])
+  </script>

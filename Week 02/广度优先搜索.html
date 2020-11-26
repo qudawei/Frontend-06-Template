@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广度优先搜索</title>
+    <style>
+        .cell{
+            line-height: 7px;
+            width: 6px;
+            height: 6px;
+            background-color: lightblue;
+            border-bottom: 1px solid #fff;
+            border-right: 1px solid #fff;
+            vertical-align: middle;
+            float: left;
+        }
+        #container{
+            width: 701px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <button onclick="localStorage['map'] = JSON.stringify(map)">save</button>
+    <script>
+        var map = localStorage['map']?JSON.parse(localStorage['map']):Array(10000).fill(0);
+        let container = document.getElementById('container');
+        for(let x = 0;x < 100;x++){
+            for(let y = 0;y < 100;y++){
+                let cell = document.createElement('div');
+                cell.classList.add('cell');
+                if(map[100*x + y] == 1){
+                    cell.style.backgroundColor = "black";
+                }
+                cell.addEventListener('mousemove', ()=>{
+                    if(mousedown){
+                        if(clear){
+                            cell.style.backgroundColor = "";
+                            map[100*x + y] = 0;
+                        }else{
+                            map[100*x + y] = 1;
+                            cell.style.backgroundColor = "black";
+                        }
+                    }
+                })
+                container.appendChild(cell)
+            }
+        }
+        let mousedown = false;
+        let clear = false;
+        document.addEventListener("mousedown", e=>{
+            mousedown = true;
+            clear = (e.which === 3)
+        })
+        document.addEventListener("mouseup", ()=>{
+            mousedown = false;
+        })
+        //阻止右键冒泡
+        document.addEventListener("contextmenu", e=>{
+            e.preventDefault();
+        })
+        function path(map, start, end){
+            var queue = [start]
+            function insert(x, y){
+                if(x <0 || x >= 100 || y <0 || y >= 100 ){
+                    return
+                }
+                // 为1 是障碍物 2是查找过的
+                if(map[x*100 + y]){
+                    return;
+                }
+                map[x*100 + y] = 2;
+                queue.push([x, y])
+            }
+            //直到queue里面为空
+            while(queue.length){
+                let [x, y] = queue.shift();
+                console.log(x, y)
+                //找到目标点
+                if(x === end[0] && y === end[1]){
+                    return
+                }
+                insert(x, y + 1);
+                insert(x, y - 1);
+                insert(x - 1, y);
+                insert(x + 1, y);
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
