@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>proxy用法</title>
+</head>
+<body>
+    <script>
+        //此对象不可被监听 js底层的机制
+        let obj = {
+            a:1,
+            b:2
+        }
+        let po = new Proxy(obj,{
+            get(){
+                return obj;
+            },
+            set(obj, prop, val){
+				console.log(obj, prop, val);
+			}
+        })
+        let obj2 = {
+            a:3,
+            b:4,
+            get val(){
+                return this.a;
+            },
+            set val(n) {
+                this.a = n;
+            }
+        }
+
+    </script>
+</body>
+</html>

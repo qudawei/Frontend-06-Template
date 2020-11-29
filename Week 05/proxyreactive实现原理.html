@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>proxy reactive实现原理</title>
+</head>
+<body>
+    <script>
+        //此对象不可被监听 js底层的机制
+        let obj = {
+            a:1,
+            b:2
+        }
+        let po = new reactive(obj);
+        function reactive(obj){
+            return new Proxy(obj,{
+                get(obj, prop){
+                    return obj[prop];
+                },
+                set(obj, prop, val){
+                    obj[prop] = val;
+                }
+            })
+        }
+    </script>
+</body>
+</html>
