@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dogBitePerson</title>
+</head>
+
+<body>
+    <script>
+        //设计对象状态行为时候 遵循 行为改变状态
+        class Human {
+            constructor(){
+            }
+            Hurt(damage) {
+                console.log(`${damage}`);
+            }
+        }
+        class Dog {
+            constructor(){
+            }
+            bite() {
+                return 'bite';
+            }
+        }
+
+        let person = new Human();
+        let dog = new Dog();
+        person.Hurt(dog.bite());
+    </script>
+</body>
+
+</html>
