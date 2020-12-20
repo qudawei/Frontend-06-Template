@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>找到指定字母</title>
+</head>
+<body>
+    <script>
+        // let target = 'a';
+        // // 法一：
+        // str.indexOf(target) > -1
+        // // 法二：
+        // str.includes(target) === true;
+        let str = 'i am a good boy';
+        // arr要查所包含的字母数组
+        function matchLetter(string, arr, obj={}){
+            for (const str of arr) {
+                console.log(str);
+                if(string.indexOf(str) > -1){
+                    obj[str] = true;
+                }else{
+                    obj[str] = false;
+                }
+            }
+            return obj;
+        }
+        let obj = matchLetter(str, ['ab', 'abcdef'])
+        console.log('flag', obj['abcdef']);
+    </script>
+</body>
+</html>
