@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>match</title>
+	</head>
+	<body>
+		<div>
+			<div id="div1" class="div1"></div>
+		</div>
+		<div>
+			<div class="div2"></div>
+		</div>
+		<script>
+			function match(selector, element) {
+				if (!element) return false;
+				const selectorList = selector.split(' ').reverse();
+				console.log(selectorList);
+
+				for (const select of selectorList) {
+					const list = selector.match(/(#|.)?\w+/g);
+					for (const item of list) {
+						if (item.charAt(0) === '#') {
+							if (!(element.id && element.id === item.replace('#', ''))) return false;
+						} else if (item.charAt(0) === '.') {
+							if (!(element.classList.length > 0 && Array.from(element.classList).includes(item.replace('.', '')))) return false;
+						}
+					}
+				}
+				return true;
+			}
+			const test1 = match('div #div1.div1', document.getElementById('div1'));
+			const test2 = match('div .div2', document.getElementsByClassName('div2')[0]);
+			console.log(test1);
+			console.log(test2);
+		</script>
+	</body>
+</html>
