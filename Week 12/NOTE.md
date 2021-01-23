@@ -61,7 +61,7 @@
 3. position为absolute或fixed；
 4. display为inline-block,
 5. overflow不为visible；
-## 动画(三次贝塞尔曲线：https://cubic-bezier.com/#.17,.67,.83,.67)
+##### 三、动画(三次贝塞尔曲线：https://cubic-bezier.com/#.17,.67,.83,.67)
 
 动画有两种属性可以控制，使用 transition 来定义简单的过渡动画，而 animation + @keyframe 的方式可以分段定义复杂动画。
 
