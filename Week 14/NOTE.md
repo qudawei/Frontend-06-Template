@@ -1,10 +1,10 @@
 #### 1. 组件的基本知识 | 组件的基本概念和基本组成部分
 ##### 对象与组件
-1. 对象
+  对象
    1. Properties 属性
    2. Methods 方法
    3. Inherit 继承关系
-2. 组件(即是对象又是模块，或者是特殊的对象，特点是可以以树形结构来进行组合，并且有一定的模版化配置的能力)
+ 组件(即是对象又是模块，或者是特殊的对象，特点是可以以树形结构来进行组合，并且有一定的模版化配置的能力)
    1. Properties
    2. Methods
    3. Inherit
@@ -92,10 +92,6 @@ input（坑）
 | no |yes | no | no | config|
 
 
-##### Lifecycle
-created
-destroyed
-
 
 ##### Children
 1. Content 型 Children（我有几个 children，我就显示几个）
@@ -109,4 +105,13 @@ destroyed
 </my-list>
 ```
 
-#### 2. 组件的基本知识 | 为组件添加 JSX 语法
+#### 2. 使用jsx组件封装轮播图。
+  - 先安装jsx-template编译所写jsx部分代码，查看编译jsx部分用于React.CreateElement
+  - 实现简易React.CreateElement,并将公共部分封装进入Component
+  - 实现轮播图
+   - 先挂载jsx中轮播图组件
+   - 渲染轮播图，调整轮播图的位置
+   - 实现轮播图自动播放（注意：滚动到最后一张图的处理）
+   - 实现轮播图手动滚动（先注释掉自动播放；document监听处理轮播图点击事件，以及在鼠标mousedown时处理mouseup（处理解绑事件）和mousemove；处理图片手动播放逻辑（有点蒙圈））
+  
+
