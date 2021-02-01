@@ -217,7 +217,7 @@
     names = names.filter(e => e != "Intl")
 
     //https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15
-    names = filterOut(name, ["WebGLContextEvent"])
+    names = filterOut(names, ["WebGLContextEvent"])
 
     //https://www.w3.org/TR/webaudio
     names = filterOut(names, ["BaseAudioContext", "AudioContext", "offlineAudioContext", "AudioBuffer", "AudioNode", "AudioParam", "AudioScheduledSourceNode", "AnalyserNode", "AudioBuffSourceNode", "AudioDestinationNode", "AudioListener", "AudioProcessingEvent", "BiquadFilterNode", "ChannelMergerNode", "ChannelSplitterNode", "ConstantSourceNode", "ConvolverNode", "DelayNode", "DynamicsCompressorNode", "GainNode", "IIRFilterNode", "MediaElementAudioSourceNode", "MediaStreamAudioDestinationNode", "MediaStreamAudioSourceNode", "MediaStreamTrackAudioSourceNode", "OscillatorNode", "PannerNode", "PeriodicWave", "ScriptProcessorNode", "StereoPannerNode", "WaveShaperNode", "AudioWorklet"])
