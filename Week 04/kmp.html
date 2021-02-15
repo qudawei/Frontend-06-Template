@@ -2,14 +2,17 @@
 
     const kmp = (source, pattern) => {
         const table = Array(pattern.length).fill(0)
-
+        //查看自身匹配
         {
+            //从i开始匹配索引  j 计算重复的位数
             let i = 1, j = 0
             while (i < pattern.length) {
+                //有自重复
                 if (pattern[i] === pattern[j]) {
                     ++i, ++j
-                    table[i] = j
+                    table[i] = j //记录重复
                 } else {
+                    //防止 aabbccabc ab  此情况若前面仍然有重复，则需要把重复消为0再进行匹配
                     if (j > 0) {
                         j = table[j]
                     } else {
@@ -38,5 +41,5 @@
         }
     }
 
-    console.log(kmp('aabaac', 'bac'))
+    console.log(kmp('abababc', 'aabaaac'))
 </script>
