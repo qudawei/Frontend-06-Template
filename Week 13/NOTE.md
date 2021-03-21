@@ -1,73 +1,117 @@
-## DTD与XML namespace
-### XML与SGML
-- http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
-- http://www.w3.org/1999/xhtml   
-任何人不得在访问网页的时候访问DTD（虽然是个url，但是禁止访问。不然网站要瘫痪了）   
-&nbsp; 不建议使用，破坏了语义。若两个单词中间加上&nbsp;会产生分词的问题。
-如果有空格的需求，通过CSS的white-space属性控制   
+#### 1. 组件的基本知识 | 组件的基本概念和基本组成部分
+##### 对象与组件
+  对象
+   1. Properties 属性
+   2. Methods 方法
+   3. Inherit 继承关系
+ 组件(即是对象又是模块，或者是特殊的对象，特点是可以以树形结构来进行组合，并且有一定的模版化配置的能力)
+   1. Properties
+   2. Methods
+   3. Inherit
+   4. ** Attribute  特性
+   5. ** Config & State  配置、当前状态
+   6. ** Event  事件机制，往外传递东西
+   7. ** Lifecycle  声明周期
+   8. ** Children  
 
-重要转义符：
-- quot 是双引号
-- amp 是&符
-- lt 是小于号
-- gt 是大于号
+##### Component
+                    Component
+End User Input                  <----  attribute      Component User's Markup Code
+       ---------->    State     ------------------
+                        |       <----  Method
+                        |       <----  Property    Component User's JS Code
+                        V       -----> Event
+                    Children
 
-重要标签：
-- strong 表示字或词很重要
-- em 表示强调重点是什么，重音 一个苹果（中的一个） 
-- hr 表示将上下两部分分割 
-- figure 图表下文字说明
-- nav 导航性质
-- dfn 词的定义
+##### Attribute
+Attribut 强调描述性
+Property 强调从属关系
 
-## 合法元素
-- Elemenet: <tagname>...</tagname>
-- Text: text
-- Comment: <!-- comments -->
-- DocumentType: <!Doctype html
-- ProcessingInstruction: <?a 1?>
-- CDATA: <![CDATA[]]
 
-## 浏览器API
-### DOM API
-- traversal系列，不建议用
-- 节点
-    Document：文档根节点   
-    DocumentFragment：文档片段   
-    DocumentType:文档类型   
-    Element：元素型节点    
-    CharacterData：字符    
-- 导航类操作   
-    parentNode , parentElement,  childNodes , children   
-    firstChild ,firstElementChild ,  lastChild, lastElementChild   
-    nextSibling ,nextElementSibling,  previousSibling, previousElementSibling   
-- 操作   
-    appendChild,  insertBefore,  removeChild（只能在parent进行）, replaceChild   
-- 高级操作   
-    compareDocumentPosition: 比较两个节点中关系的函数   
-    contains: 检查一个节点是否包含另一个节点的函数   
-    isEqualNode: 检查两个节点是否完全相同   
-    isSameNode :检查两个节点是否是同一个节点，实际上在JavaScript 中可以用“===”   
-    cloneNode: 复制一个节点，如果传入参数true，则会连同子元素做深拷贝   
-- Event：冒泡与捕获   
-  - 捕获：浏览器不能判断当前鼠标点击在浏览器哪个位置，需要浏览器计算，浏览器计算的过程就是捕获（从外到内）
-  - 冒泡：冒泡就是已经知道点击在那个元素，层层向外触发，让元素响应的过程。addeventlistener不传递第三个参数，默认是冒泡的事件监听
-### Range API： (frament range 很重要)
-    - 创建方法一： var range = new Range()
-	- 创建方法二： getSelection()
-### CSSOM： css一切属性都需要通过document.styleSheets 访问
-	操作css规则
-	- document.styleSheets[0].insertRule();
-	- document.styleSheets[0].removeRule();
-	* window
-	  - outerHeight属性设置或返回一个窗口的外部高度，包括所有界面元素（如工具栏/滚动条）。
+Attribute:
+```html
+<my-component attribut="v">
+<script>
+  myComponent.getAttribute("a")
+  myComponent.setAttribute("a", "value")
+</script>
+```
+Property:
+```js
+myComponent.a = "value"
+```
+eg.
+```html
+<div class="cls2 cls2"></div>
+<script>
+  var div = document.getElementTagName('div')
+  div.className // cls1 cls2
+</script>
+```
+早年的 Class 是关键字，早期的 javascript 不允许关键字做属性名，现在可以了。
+为了规避这一个问题，html 里面做了一个妥协的设计，把 attribute 仍然叫做 class，但是 property 变成了 className，两者之间是互相的反射关系。
+现在的 javascript 语言已经没有这个问题了， div.class 也是可以的。
 
-      - outerWidth属性设置或返回窗口的外部宽度，包括所有的界面元素（如工具栏/滚动）。
-	  - innerheight 返回窗口的文档显示区的高度。
+有时 attribute 是一个字符串，而 property 是一个语义化之后的对象
+style
+```html
+<div class="cls2 cls2" style=“color: blue;”></div>
+<script>
+  var div = document.getElementTagName('div')
+  div.style // 对象
+</script>
+```
+href属性
+```html
+<a href="//m.taobao.com"></a>
+<script>
+  var a = document.getElementTagName('a')
+  a.href // 'http://m.taobao.com' 这个 URL 是 resolve 过的结果 -- property
+  a.getAttribute('href') // 'm.taobao.com' 跟 HTML 代码中完全一致 --- attribute
+</script>
+```
+input（坑）
 
-      - innerwidth 返回窗口的文档显示区的宽度。
-	  - devicePixelRatio 电脑物理像素与代码逻辑像素的比值 正常1:1
-### CSSOM view：
-  		- getClientRects() 拖拽常用
-		- getBoundingClientRect() 最顶层盒子，求两个元素差值 
-### 整理api：见work 13文件
+```html
+<input value="cute" />
+<script>
+  var input = document.getElementTagName('input') // 若 property 没有设置，则结果是 attribute
+  input.value // cute
+  input.getAttribute('value') // cute
+  input.value = 'hello' // 若 value 属性已经设置，则 attribute 不变， property 变化，元素上实际的效果是 property 优先
+  input.value // hello
+  input.getAttribute('value') // cute)
+</script>
+```
+这里的 attribute 相当于一个默认值的东西，你去修改或者在input中输入，都不会改变 attribute 的值。
+|Markup set（静态声明语言设置）     | JS set（js设置）  | JS Change（js 修改） | User Input Change（终端用户修改）|类别
+|---------:|----------:|---------:--------:|
+| no | yes | yes | ? | property|
+| yes| yes | yse | ? |attribute|
+| no | no | no |yes | state|
+| no |yes | no | no | config|
+
+
+
+##### Children
+1. Content 型 Children（我有几个 children，我就显示几个）
+2. Template 型 Children（能渲染的 children 不定，通过一些特定的条件，形式来产生不同的数量children）
+
+```html
+<my-button><img src="{{icon}}" />{{title}}</my-button>
+
+<my-list>
+  <li><img src="{{icon}}" />{{title}}</li>
+</my-list>
+```
+
+#### 2. 使用jsx组件封装轮播图。
+  - 先安装jsx-template编译所写jsx部分代码，查看编译jsx部分用于React.CreateElement
+  - 实现简易React.CreateElement,并将公共部分封装进入Component
+  - 实现轮播图
+   - 先挂载jsx中轮播图组件
+   - 渲染轮播图，调整轮播图的位置
+   - 实现轮播图自动播放（注意：滚动到最后一张图的处理）
+   - 实现轮播图手动滚动（先注释掉自动播放；document监听处理轮播图点击事件，以及在鼠标mousedown时处理mouseup（处理解绑事件）和mousemove；处理图片手动播放逻辑（有点蒙圈））
+  
+
